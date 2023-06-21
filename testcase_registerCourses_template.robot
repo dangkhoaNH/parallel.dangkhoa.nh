@@ -13,7 +13,7 @@ ${username}
 ${password}
 
 *** Test Cases ***
-Register Course
+Register Courses
     Acquire Lock   MyLock
     Release Lock   MyLock
     ${valuesetname}=    Acquire Value Set
@@ -27,10 +27,11 @@ Register Course
     ...    x-app-version=1.0.0.0    
     ...    x-device-id=Test-Device-01
     ...    Authorization=Bearer ${token}
-    ${jsonTransfer}      Convert String To Json    {"courseIdList": ["648ac0bde9739865190517e4"]}
+    ${jsonTransfer}      Convert String To Json    {"courseIdList": ["648ac0bde9739865190517e4", "64911058d092dc0107fa6d4e"]}
     ${response}          Post On Session      myssion    /registration/register-course     
     ...                  headers=${headers}             json=${jsonTransfer}    expected_status=200
     Should Be Equal As Strings    ${response.json()['result'][0]['status']}     success
+    Should Be Equal As Strings    ${response.json()['result'][1]['status']}     success
     
 *** Keywords ***
 Create Env

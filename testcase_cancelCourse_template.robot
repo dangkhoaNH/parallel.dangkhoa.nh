@@ -13,7 +13,7 @@ ${username}
 ${password}
 
 *** Test Cases ***
-Register Course
+Cancel Course
     Acquire Lock   MyLock
     Release Lock   MyLock
     ${valuesetname}=    Acquire Value Set
@@ -21,16 +21,15 @@ Register Course
     ${password}=     Get Value From Set   PASSWORD
     Log    ${username}: ${password}
     Login function    ${username}    ${password}
-    &{headers}          Create Dictionary        Content-Type=application/json 
+    &{headers}          Create Dictionary               Content-Type=application/x-www-form-urlencoded 
     ...    x-client-id=android-test-app    
     ...    x-app-platform=ANDROID    
     ...    x-app-version=1.0.0.0    
     ...    x-device-id=Test-Device-01
     ...    Authorization=Bearer ${token}
-    ${jsonTransfer}      Convert String To Json    {"courseIdList": ["648ac0bde9739865190517e4"]}
-    ${response}          Post On Session      myssion    /registration/register-course     
-    ...                  headers=${headers}             json=${jsonTransfer}    expected_status=200
-    Should Be Equal As Strings    ${response.json()['result'][0]['status']}     success
+    ${param}             Create Dictionary              courseIdList=648ac0bde9739865190517e4
+    ${response}          Delete On Session              myssion   /registration/delete-registered-courses    
+    ...                  headers=${headers}             params=${param}    expected_status=200
     
 *** Keywords ***
 Create Env
