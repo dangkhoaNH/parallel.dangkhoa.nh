@@ -11,6 +11,7 @@ ${base_url}           https://kuniv.tech/api
 ${token}
 ${username}
 ${password}
+${courseIdList}       {"courseIdList": ["648ac0bde9739865190517e4", "64911058d092dc0107fa6d4e", "64911058d092dc0107fa6d4e"]}
 
 *** Test Cases ***
 Register Courses
@@ -27,11 +28,21 @@ Register Courses
     ...    x-app-version=1.0.0.0    
     ...    x-device-id=Test-Device-01
     ...    Authorization=Bearer ${token}
-    ${jsonTransfer}      Convert String To Json    {"courseIdList": ["648ac0bde9739865190517e4", "64911058d092dc0107fa6d4e"]}
+    ${jsonTransfer}      Convert String To Json    ${courseIdList}
     ${response}          Post On Session      myssion    /registration/register-course     
     ...                  headers=${headers}             json=${jsonTransfer}    expected_status=200
-    Should Be Equal As Strings    ${response.json()['result'][0]['status']}     success
-    Should Be Equal As Strings    ${response.json()['result'][1]['status']}     success
+    
+    # Count Courses from Json
+    ${json}                Split String      ${courseIdList}  ,
+    ${course_count}        Get Length        ${json}
+    Log To Console         ${course_count}
+
+    ${quantity}            Set Variable      ${course_count}
+
+    # Check register courses success
+    FOR    ${index}    IN RANGE    0    ${quantity}
+        Run Keyword And Continue On Failure    Should Be Equal As Strings    ${response.json()['result'][${index}]['status']}     success
+    END
     
 *** Keywords ***
 Create Env
