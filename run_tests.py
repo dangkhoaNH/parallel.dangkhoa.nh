@@ -30,21 +30,21 @@ def delete_cases():
             if os.path.exists(test_file_path):
                 os.remove(test_file_path)
 
-def create_accounts():
+def create_accounts(schoolName):
     # Check folder exists or not, if no exists => create
     if not os.path.exists(target_directory_data):
         os.makedirs(target_directory_data)
 
     with open(os.path.join(target_directory_data, "account.dat"), "w") as file:
         for i in range(1, num_users + 1):
-            username = f"studentbk{i:02d}"
+            username = f"student{schoolName}{i:02d}"
             password = "123456"
 
             file.write(f"[Student {i}]\n")
             file.write(f"USERNAME={username}\n")
             file.write(f"PASSWORD={password}\n\n")
     
-    print("Create {num_users} accounts successfully")
+    print("Create ", num_users, " accounts successfully")
 
 def create_test_files():
     # Check folder exists or not, if no exists => create
@@ -62,7 +62,7 @@ def create_test_files():
         with open(test_file_path, "w") as file:
             file.write(test_content)
     
-    print("Create {num_users} testcases successfully")
+    print("Create ", num_users, " testcases successfully")
 
 def run_cmd():
     command = f"pabot --pabotlib --processes {num_users} --resourcefile {target_directory_data}/account.dat {target_directory_testcases}/."
@@ -74,10 +74,11 @@ if __name__ == "__main__":
     template_file = "testcase_%s_template.robot" % (get_template_file())
     target_directory_testcases = "testcases"
     target_directory_data = "data"
+    schoolName = "SG"
     
     num_users = get_num_users()
 
-    create_accounts()
+    create_accounts(schoolName)
     create_test_files()
     delete_cases()
     run_cmd()

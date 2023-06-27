@@ -27,7 +27,7 @@ Cancel Course
     ...    x-app-version=1.0.0.0    
     ...    x-device-id=Test-Device-01
     ...    Authorization=Bearer ${token}
-    ${param}             Create Dictionary              courseIdList=648ac0bde9739865190517e4
+    ${param}             Create Dictionary              courseIdList=64992cfdf843ab615452acae
     ${response}          Delete On Session              myssion   /registration/delete-registered-courses    
     ...                  headers=${headers}             params=${param}    expected_status=200
     

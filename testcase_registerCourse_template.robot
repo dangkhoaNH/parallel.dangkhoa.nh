@@ -27,7 +27,7 @@ Register Course
     ...    x-app-version=1.0.0.0    
     ...    x-device-id=Test-Device-01
     ...    Authorization=Bearer ${token}
-    ${jsonTransfer}      Convert String To Json    {"courseIdList": ["648ac0bde9739865190517e4"]}
+    ${jsonTransfer}      Convert String To Json    {"courseIdList": ["64992c2af843ab615452ac9b"]}
     ${response}          Post On Session      myssion    /registration/register-course     
     ...                  headers=${headers}             json=${jsonTransfer}    expected_status=200
     Should Be Equal As Strings    ${response.json()['result'][0]['status']}     success

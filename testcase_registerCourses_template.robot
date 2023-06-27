@@ -11,7 +11,7 @@ ${base_url}           https://kuniv.tech/api
 ${token}
 ${username}
 ${password}
-${courseIdList}       {"courseIdList": ["648ac0bde9739865190517e4", "64911058d092dc0107fa6d4e", "64911058d092dc0107fa6d4e"]}
+${courseIdList}       {"courseIdList": ["64992c2af843ab615452ac9b", "64992cfdf843ab615452acae"]}
 
 *** Test Cases ***
 Register Courses
